@@ -59,4 +59,8 @@ jobs:
           platforms: linux/amd64,linux/arm64
           build-args:
             TAG=${{ github.ref-name }}
+            CI_COMMIT_REF_NAME=${{ github.ref_name }}
+            CI_COMMIT_SHA=${{ github.sha }}a
+            CI_COMMIT_TITLE=${{ github.event.head_commit.message }}
+            CI_COMMIT_TIMESTAMP=${{ steps.vars.outputs.ffmpeg_commit_timestamp }}
 
