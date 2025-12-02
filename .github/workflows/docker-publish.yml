@@ -25,7 +25,8 @@ jobs:
         run: |
           commit_timestamp=$(git show -s --format="%ci" ${{github.sha}})
           echo commit $commit_timestamp
-          echo "commit_timestamp=${commit_timestamp}" >> "$GITHUB_OUTPUT"
+          echo "ffmpeg_commit_timestamp=${commit_timestamp}" >> "$GITHUB_OUTPUT"
+          echo "ffmpeg_branch=${commit_timestamp}" >> "$GITHUB_OUTPUT"
         shell: bash
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -39,7 +40,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/mmbase/${{ github.repository }}
+          images: ghcr.io/${{ github.repository }}
           tags: |
             type=ref,event=branch
             type=ref,event=tag
@@ -56,4 +57,6 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           platforms: linux/amd64,linux/arm64
+          with:
+            ARGS= ${{ github.ref-name
 
