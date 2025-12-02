@@ -19,7 +19,7 @@ ARG CI_COMMIT_TITLE
 ARG CI_COMMIT_TIMESTAMP
 
 COPY --from=build /DOCKER.BUILD /DOCKER.BUILD
-COPY --from=build /usr/local/ffmpeg /usr/local/ffmpeg
+COPY --from=build  /usr/local/bin/ffmpeg /usr/local/bin/ffmpeg
 
 
 SHELL [ "/bin/bash", "-c" ]
