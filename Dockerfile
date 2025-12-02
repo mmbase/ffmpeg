@@ -15,7 +15,8 @@ RUN apt-get -y update && apt-get -y install git make gcc nasm pkg-config libx264
     git clone  --branch ${FFMEG_VERSION}  https://github.com/FFmpeg/FFmpeg.git  --single-branch && \
     cd FFmpeg/ && ./configure --enable-nonfree --enable-gpl --enable-libx264 --enable-zlib  && \
     make install && \
-    echo ffmpeg_version=${FFMEG_VERSION} >> /DOCKER.BUILD
+    echo ffmpeg version=${FFMEG_VERSION} >> /DOCKER.BUILD
 
-
-RUN  (echo -e "${NAME} git version=${CI_COMMIT_SHA}\t${CI_COMMIT_REF_NAME}\t${CI_COMMIT_TIMESTAMP}\t${CI_COMMIT_TITLE}") >> /DOCKER.BUILD
+SHELL [ "/bin/bash", "-c" ]
+ENV SHELL=/bin/bash
+RUN (echo -e "${NAME} git version=${CI_COMMIT_SHA}\t${CI_COMMIT_REF_NAME}\t${CI_COMMIT_TIMESTAMP}\t${CI_COMMIT_TITLE}") >> /DOCKER.BUILD
