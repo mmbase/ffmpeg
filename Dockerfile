@@ -1,11 +1,4 @@
-FROM eclipse-temurin:8u472-b08-jdk-noble
-
-ARG NAME=ffmpeg
-
-ARG CI_COMMIT_REF_NAME
-ARG CI_COMMIT_SHA
-ARG CI_COMMIT_TITLE
-ARG CI_COMMIT_TIMESTAMP
+FROM eclipse-temurin:8u472-b08-jdk-noble AS build
 
 
 ENV FFMEG_VERSION=n4.4.6
@@ -16,6 +9,18 @@ RUN apt-get -y update && apt-get -y install git make gcc nasm pkg-config libx264
     cd FFmpeg/ && ./configure --enable-nonfree --enable-gpl --enable-libx264 --enable-zlib  && \
     make install && \
     echo ffmpeg version=${FFMEG_VERSION} >> /DOCKER.BUILD
+
+FROM eclipse-temurin:8u472-b08-jdk-noble
+
+ARG NAME=ffmpeg
+ARG CI_COMMIT_REF_NAME
+ARG CI_COMMIT_SHA
+ARG CI_COMMIT_TITLE
+ARG CI_COMMIT_TIMESTAMP
+
+COPY --from=build /DOCKER.BUILD /DOCKER.BUILD
+COPY --from=build /usr/local/ffmpeg /usr/local/ffmpeg
+
 
 SHELL [ "/bin/bash", "-c" ]
 ENV SHELL=/bin/bash
