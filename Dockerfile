@@ -12,6 +12,9 @@ RUN apt-get -y update && apt-get -y install git make gcc nasm pkg-config libx264
 
 FROM eclipse-temurin:8u472-b08-jdk-noble
 
+RUN apt-get -y update && apt-get -y install libx264-dev libxext-dev libxfixes-dev zlib1g-dev
+
+
 ARG NAME=ffmpeg
 ARG CI_COMMIT_REF_NAME
 ARG CI_COMMIT_SHA
